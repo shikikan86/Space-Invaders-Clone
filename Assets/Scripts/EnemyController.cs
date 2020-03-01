@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
 
     public AudioSource source;
     
-    // Start is called before the first frame update
+    //Calling the function MoveEnemy with the given parameters for the increments to move the enemy
     void Start()
     {
         InvokeRepeating("MoveEnemy", 0.1f, v);
@@ -26,17 +26,16 @@ public class EnemyController : MonoBehaviour
         
     }
 
-    void Update()
-    {
-        
-    }
 
     void MoveEnemy()
     {
+        //Moving the entire group
         enemyHolder.position += Vector3.right * speed;
 
+        //Checks every enemy in the enemyholder object
         foreach(Transform enemy in enemyHolder)
         {
+            //determines the borders for the enemy
             if(enemy.position.x < -9.5f || enemy.position.x > 9.5)
             {
                 speed = -speed;
@@ -44,6 +43,7 @@ public class EnemyController : MonoBehaviour
                 return;
             }
 
+            //Enemy reaches the player
             if(enemy.position.y <= -3)
             {
                 source.Stop();
@@ -51,6 +51,7 @@ public class EnemyController : MonoBehaviour
                 Time.timeScale = 0;
             }
 
+            //Fire rate
             if(Random.Range(0,30) == 15) //one in 30 chance of an enemy shooting when moving
             {
                 Instantiate(shot, enemy.position, enemy.rotation);
@@ -67,15 +68,14 @@ public class EnemyController : MonoBehaviour
 
 
         }
-
-        //speedUp(enemyHolder.childCount);
-
+        //speeds up the last enemy by a more significant amount
         if (enemyHolder.childCount == 1)
         {
             CancelInvoke();
             InvokeRepeating("MoveEnemy", 0.1f, 0.25f);
         }
 
+        //Win condition
         if(enemyHolder.childCount <= 0)
         {
             //win text 

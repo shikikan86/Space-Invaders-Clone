@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Restart : MonoBehaviour
 {
 
-    // Update is called once per frame
+    //if R is pressed, reload the scene
     void Update()
     {
         if (Input.GetKey(KeyCode.R))

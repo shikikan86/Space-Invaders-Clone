@@ -11,13 +11,13 @@ public class EnemyBulletController : MonoBehaviour
     {
         bullet = GetComponent<Transform>();
         speed = 0.1f;
-
     }
 
+    //Fixed Update updates based on time passed rather than every frame
     void FixedUpdate()
     {
-        bullet.position += Vector3.up * -speed;
-
+        //Move the bullet down, towards the player
+        bullet.position += Vector3.up * -speed; 
         if(bullet.position.y <= -10)
         {
             Destroy(bullet.gameObject);
@@ -26,25 +26,14 @@ public class EnemyBulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        //Player is dead if bullet hits them
         if(other.tag == "Player")
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
             GameOver.dead = true;
         }
-
-        else if(other.tag == "Base")
-        {
-            GameObject playerBase = other.gameObject;
-            Base basehp = playerBase.GetComponent<Base>();
-            basehp.hp -= 1;
-            Destroy(gameObject);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        //base colliding wasn't working here, so I moved it to the base script
         
     }
 }

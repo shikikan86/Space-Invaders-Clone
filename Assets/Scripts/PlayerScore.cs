@@ -16,7 +16,7 @@ public class PlayerScore : MonoBehaviour
         scoretext = GetComponent<Text>();
     }
 
-    // Update is called once per frame
+    //updates the text fields for score and high score
     void Update()
     {
         temp = string.Format("{0:0000}", playerscore);
