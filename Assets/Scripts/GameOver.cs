@@ -34,6 +34,7 @@ public class GameOver : MonoBehaviour
             if (!Lock)
             {
                 Lock = true;
+                source2.Stop();
                 source2.clip = lose;
                 source2.PlayOneShot(source2.clip);
                 source2.clip = wilhelm;

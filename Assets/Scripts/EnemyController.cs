@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class EnemyController : MonoBehaviour
     public Text winText;
     public float fireRate = 30f;
     public float v = 0.9f;
+    public float timer = 3f;
+    public float load;
 
     public AudioSource source;
     
@@ -32,11 +35,15 @@ public class EnemyController : MonoBehaviour
         //Moving the entire group
         enemyHolder.position += Vector3.right * speed;
 
+        
+
+
         //Checks every enemy in the enemyholder object
-        foreach(Transform enemy in enemyHolder)
+        foreach (Transform enemy in enemyHolder)
         {
+            
             //determines the borders for the enemy
-            if(enemy.position.x < -9.5f || enemy.position.x > 9.5)
+            if (enemy.position.x < -9.5f || enemy.position.x > 9.5)
             {
                 speed = -speed;
                 enemyHolder.position += Vector3.down * 0.5f;
@@ -52,7 +59,7 @@ public class EnemyController : MonoBehaviour
             }
 
             //Fire rate
-            if(Random.Range(0,30) == 15) //one in 30 chance of an enemy shooting when moving
+            if(Random.Range(0,61) == 30) //one in 60 chance of an enemy shooting when moving
             {
                 Instantiate(shot, enemy.position, enemy.rotation);
             }
@@ -62,7 +69,7 @@ public class EnemyController : MonoBehaviour
             {
                 childCount = enemyHolder.childCount;
                 CancelInvoke();
-                v -= 0.02f;
+                v -= 0.01f;
                 InvokeRepeating("MoveEnemy", 0.1f, v);
             }
 
@@ -72,7 +79,7 @@ public class EnemyController : MonoBehaviour
         if (enemyHolder.childCount == 1)
         {
             CancelInvoke();
-            InvokeRepeating("MoveEnemy", 0.1f, 0.25f);
+            InvokeRepeating("MoveEnemy", 0.1f, 0.05f);
         }
 
         //Win condition
@@ -80,8 +87,16 @@ public class EnemyController : MonoBehaviour
         {
             //win text 
             winText.enabled = true;
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
+            StartCoroutine(win());
+
         }
+    }
+
+    IEnumerator win()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(3);
     }
 
     

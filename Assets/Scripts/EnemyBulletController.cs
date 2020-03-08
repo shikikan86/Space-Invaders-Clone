@@ -6,6 +6,8 @@ public class EnemyBulletController : MonoBehaviour
 {
     public Transform bullet;
     public float speed;
+    public AudioSource source;
+    public AudioClip blowup;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +31,11 @@ public class EnemyBulletController : MonoBehaviour
         //Player is dead if bullet hits them
         if(other.tag == "Player")
         {
-            Destroy(other.gameObject);
+            //source.clip = blowup;
+            //source.PlayOneShot(source.clip);
+            //Destroy(other.gameObject);
             Destroy(gameObject);
-            GameOver.dead = true;
+            //GameOver.dead = true;
         }
         //base colliding wasn't working here, so I moved it to the base script
         

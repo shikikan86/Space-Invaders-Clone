@@ -6,11 +6,15 @@ public class BaseLose : MonoBehaviour
 {
     public Transform playerBase;
     public AudioSource source;
+    public AudioClip wilhelm;
+    public AudioClip lose;
+    public bool Lock;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerBase = GetComponent<Transform>();    
+        playerBase = GetComponent<Transform>();
+        Lock = true;
     }
 
     // Update is called once per frame
@@ -18,7 +22,17 @@ public class BaseLose : MonoBehaviour
     {
         if (playerBase.childCount == 0)
         {
-            source.Stop();
+            
+            if (Lock)
+            {
+                Lock = false;
+                source.Stop();
+                source.clip = wilhelm;
+                source.PlayOneShot(source.clip);
+                source.clip = lose;
+                source.PlayOneShot(source.clip);
+            }
+            
             GameOver.dead = true;
         }
     }

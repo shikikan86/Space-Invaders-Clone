@@ -9,8 +9,9 @@ public class Restart : MonoBehaviour
     //if R is pressed, reload the scene
     void Update()
     {
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
+            PlayerController.ammo = 210;
             PlayerScore.playerscore = 0;
             GameOver.dead = false;
             Time.timeScale = 1;
